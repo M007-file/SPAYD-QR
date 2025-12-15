@@ -23,6 +23,9 @@ Developed and maintained by Michal Kopl.
 This project was created as an exploration of the SPAYD payment standard,
 IBAN generation, and QR code customization using a modern web interface.
 
+## Credits
+
+QR code generation is powered by the public API provided by https://www.qrcode-monkey.com/.
 
 ## Project structure
 
