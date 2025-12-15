@@ -10,6 +10,20 @@ This repository is provided **AS IS**, without any warranty of any kind, express
 
 ---
 
+## Author
+
+Developed and maintained by Michal Kopl.
+
+- GitHub: https://github.com/M007-file
+- LinkedIn: https://www.linkedin.com/in/michalkopl
+- Blog: https://www.kopl.pro
+
+## Purpose
+
+This project was created as an exploration of the SPAYD payment standard,
+IBAN generation, and QR code customization using a modern web interface.
+
+
 ## Project structure
 
 ```text
