@@ -359,18 +359,13 @@ button {
 /* ---------- ZÁKLAD BLOBU ---------- */
 .background .blob {
     position: absolute;
+    top: 0;
+    left: 0;
+
     width: 22vmin;
     height: 22vmin;
 
-    --rx: 18vmin;
-    --ry: 10vmin;
-    --phase: 0s;
-
-    animation: lava-orbit linear infinite;
-    animation-duration: calc(14s + var(--t, 0s));
-    animation-delay: var(--phase);
-
-    will-change: transform;
+    color: #7B3FE4; /* fallback */
 }
 
 /* ---------- VNITŘNÍ KRUH ---------- */
@@ -382,8 +377,6 @@ button {
 
     opacity: 0.35;
     mix-blend-mode: screen;
-
-    animation: lava-pulse ease-in-out infinite;
     animation-duration: calc(4s + var(--r, 0s));
 }
 
@@ -439,22 +432,6 @@ button {
 .background .blob:nth-child(5n+4) { color: var(--c4); }
 .background .blob:nth-child(5n)   { color: var(--c5); }
 
-/* ---------- STARTOVNÍ POZICE (NESLEPÍ SE) ---------- */
-.background .blob:nth-child(1)  { top: 10%; left: 15%; --t: 5s;  --r: 2s;}
-.background .blob:nth-child(2)  { top: 70%; left: 80%; --t: 12s; --r: 7s;}
-.background .blob:nth-child(3)  { top: 40%; left: 60%; --t: 2s;  --r: 10s;}
-.background .blob:nth-child(4)  { top: 80%; left: 20%; --t: 9s;  --r: 4s;}
-.background .blob:nth-child(5)  { top: 20%; left: 75%; --t: 14s; --r: 6s;}
-.background .blob:nth-child(6)  { top: 55%; left: 30%; --t: 3s;  --r: 11s;}
-.background .blob:nth-child(7)  { top: 15%; left: 55%; --t: 8s;  --r: 1s;}
-.background .blob:nth-child(8)  { top: 65%; left: 45%; --t: 6s;  --r: 13s;}
-.background .blob:nth-child(9)  { top: 30%; left: 85%; --t: 10s; --r: 3s;}
-.background .blob:nth-child(10) { top: 85%; left: 50%; --t: 4s;  --r: 8s;}
-.background .blob:nth-child(11) { top: 25%; left: 35%; --t: 15s; --r: 5s;}
-.background .blob:nth-child(12) { top: 75%; left: 65%; --t: 7s;  --r: 9s;}
-.background .blob:nth-child(13) { top: 45%; left: 10%; --t: 11s; --r: 14s;}
-.background .blob:nth-child(14) { top: 60%; left: 90%; --t: 13s; --r: 6s;}
-.background .blob:nth-child(15) { top: 5%;  left: 50%; --t: 1s;  --r: 12s;}
 
 /* ---------- ANIMACE ---------- */
 
