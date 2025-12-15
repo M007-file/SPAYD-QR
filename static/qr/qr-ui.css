@@ -1,0 +1,499 @@
+/* =========================================================
+   ZÁKLAD
+   ========================================================= */
+body {
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    margin: 0;
+    background: #f4f6f8;
+}
+
+.page-title {
+    text-align: center;
+    /* padding: 24px; */
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    justify-items: center;
+}
+
+/* =========================================================
+   PANEL
+   ========================================================= */
+.panel {
+    background: #fff;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    max-width: 800px;
+    width: 100%;
+}
+
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    background: radial-gradient(circle at top, #3E1E68, #1b0f2f);
+}
+
+.container,
+.panel {
+    position: relative;
+    z-index: 2;
+}
+
+/* =========================================================
+   FORM PRVKY
+   ========================================================= */
+label.checkbox-inline {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    margin-top: 12px;
+}
+
+label {
+    display: block;
+    margin-top: 5px;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 6px 8px;
+    margin-top: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+input[type="color"] {
+    height: 32px;
+    padding: 2px;
+}
+
+/* =========================================================
+   GRIDY
+   ========================================================= */
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-grid-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 2fr;
+    gap: 12px;
+}
+
+@media (max-width: 900px) {
+    .form-grid-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* inline grid: částka / měna / VS / příjemce / zpráva */
+.form-grid-inline {
+    display: grid;
+    grid-template-columns:
+        90px
+        70px
+        140px
+        1.2fr
+        1.5fr;
+    gap: 12px;
+    /* margin-top: 12px; */
+}
+
+@media (max-width: 1100px) {
+    .form-grid-inline {
+        grid-template-columns:
+            90px
+            70px
+            140px
+            1fr
+            1fr;
+    }
+}
+
+@media (max-width: 800px) {
+    .form-grid-inline {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================
+   SEKCE
+   ========================================================= */
+.section {
+    margin-top: 20px;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 14px;
+}
+
+/* =========================================================
+   CHECKBOXY
+   ========================================================= */
+.checkbox-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-weight: 600;
+}
+
+/* =========================================================
+   RADIO GRID (SPRITY)
+   ========================================================= */
+.radio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 68px);
+    gap: 8px;
+}
+
+.radio-tile {
+    cursor: pointer;
+}
+
+.radio-tile input {
+    display: none;
+}
+
+.radio-tile .tile {
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #fff;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    box-sizing: border-box;
+
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.radio-tile input:checked + .tile {
+    background-color: #f5faff;
+    border-color: #1976d2;
+    border-width: 2px;
+    box-shadow:
+        0 0 0 2px #ffffff,
+        0 0 0 4px #1976d2;
+}
+
+.submitbutton {
+    width: 150px;
+    padding:5px;
+    margin-top: 3px;
+}
+
+.accordion-header {
+    cursor: pointer;
+    user-select: none;
+    margin-top: 24px;
+}
+
+.accordion-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* mezera mezi textem a šipkou */
+}
+
+.accordion-arrow {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #555;
+    border-bottom: 2px solid #555;
+    transform: rotate(45deg);
+    transition: transform .2s ease;
+}
+
+.accordion-header.open .accordion-arrow {
+    transform: rotate(-135deg);
+}
+
+.accordion-content {
+    display: none;
+    margin-top: 12px;
+}
+
+.accordion-content.open {
+    display: block;
+}
+
+.gradient-grid.gradient-swap { grid-template-columns: 1fr 44px 1fr 160px auto; }
+.swap-button-wrapper { display: flex; align-items: end; justify-content: center; padding-bottom: 2px; }
+.swap-colors { width: 36px; height: 36px; border-radius: 10px; padding: 0px; border: 1px solid #cfcfcf; background: #fff; cursor: pointer; font-weight: 700; }
+.swap-colors:hover { box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+
+
+/* =========================================================
+   QR SPRITE
+   ========================================================= */
+.qr-sprite {
+    width: 60px;
+    height: 60px;
+    display: block;
+
+    background-image: url("/static/qr/spritesheet.png");
+    background-repeat: no-repeat;
+    background-position: var(--x) var(--y);
+}
+
+/* =========================================================
+   BARVY
+   ========================================================= */
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.color-grid input[type="color"] {
+    width: 100%;
+}
+
+/* =========================================================
+   GRADIENT – skryté dokud nerozhodne JS
+   ========================================================= */
+#gradient-options {
+    display: none;
+    margin-top: 5px;
+}
+
+/* =========================================================
+   VELIKOST QR
+   ========================================================= */
+.qr-size-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.qr-size-row input {
+    width: 90px;
+}
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+button {
+    margin-top: 24px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 6px;
+    width: 100%;
+}
+
+/* =========================================================
+   PREVIEW
+   ========================================================= */
+.panel.qr-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.panel.qr-preview img {
+    background: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+.gradient-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 160px;
+    gap: 12px;
+    align-items: end;
+}
+
+.gradient-grid input[type="color"],
+.gradient-grid select {
+    width: 100%;
+}
+
+/* =========================================================
+   DYNAMICKÉ POZADÍ – CLEAN & UNIFIED
+   ========================================================= */
+
+/* ---------- KONTEJNER POZADÍ ---------- */
+.background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+
+    /* světelné kapsy */
+    background:
+        radial-gradient(circle at 20% 10%, #4a257a, #1b0f2f 60%),
+        radial-gradient(circle at 80% 90%, #2b1450, #12081f 70%);
+
+    /* barevná paleta */
+    --c1: #3E1E68;
+    --c2: #5C2D91;
+    --c3: #7B3FE4;
+    --c4: #E45A84;
+    --c5: #FFACAC;
+}
+
+.background,
+.background * {
+    pointer-events: none !important;
+}
+
+/* ---------- ZÁKLAD BLOBU ---------- */
+.background .blob {
+    position: absolute;
+    width: 22vmin;
+    height: 22vmin;
+
+    --rx: 18vmin;
+    --ry: 10vmin;
+    --phase: 0s;
+
+    animation: lava-orbit linear infinite;
+    animation-duration: calc(14s + var(--t, 0s));
+    animation-delay: var(--phase);
+
+    will-change: transform;
+}
+
+/* ---------- VNITŘNÍ KRUH ---------- */
+.background .blob i {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: currentColor;
+
+    opacity: 0.35;
+    mix-blend-mode: screen;
+
+    animation: lava-pulse ease-in-out infinite;
+    animation-duration: calc(4s + var(--r, 0s));
+}
+
+.background .blob:nth-child(1)  { --phase: -2s; }
+.background .blob:nth-child(2)  { --phase: -7s; }
+.background .blob:nth-child(3)  { --phase: -11s; }
+.background .blob:nth-child(4)  { --phase: -4s; }
+.background .blob:nth-child(5)  { --phase: -9s; }
+.background .blob:nth-child(6)  { --phase: -14s; }
+.background .blob:nth-child(7)  { --phase: -6s; }
+.background .blob:nth-child(8)  { --phase: -12s; }
+.background .blob:nth-child(9)  { --phase: -3s; }
+.background .blob:nth-child(10) { --phase: -10s; }
+.background .blob:nth-child(11) { --phase: -5s; }
+.background .blob:nth-child(12) { --phase: -13s; }
+.background .blob:nth-child(13) { --phase: -8s; }
+.background .blob:nth-child(14) { --phase: -15s; }
+.background .blob:nth-child(15) { --phase: -1s; }
+
+/* ---------- HLOUBKA (PARALLAX FEEL) ---------- */
+
+/* zadní plán */
+.background .blob:nth-child(3n) {
+    transform: scale(0.75);
+    opacity: 0.18;
+}
+.background .blob:nth-child(3n) i {
+    filter: blur(28px);
+}
+
+/* střed */
+.background .blob:nth-child(3n+1) {
+    transform: scale(1);
+    opacity: 0.28;
+}
+.background .blob:nth-child(3n+1) i {
+    filter: blur(18px);
+}
+
+/* popředí */
+.background .blob:nth-child(3n+2) {
+    transform: scale(1.35);
+    opacity: 0.38;
+}
+.background .blob:nth-child(3n+2) i {
+    filter: blur(10px);
+}
+
+/* ---------- BARVY ---------- */
+.background .blob:nth-child(5n+1) { color: var(--c1); }
+.background .blob:nth-child(5n+2) { color: var(--c2); }
+.background .blob:nth-child(5n+3) { color: var(--c3); }
+.background .blob:nth-child(5n+4) { color: var(--c4); }
+.background .blob:nth-child(5n)   { color: var(--c5); }
+
+/* ---------- STARTOVNÍ POZICE (NESLEPÍ SE) ---------- */
+.background .blob:nth-child(1)  { top: 10%; left: 15%; --t: 5s;  --r: 2s;}
+.background .blob:nth-child(2)  { top: 70%; left: 80%; --t: 12s; --r: 7s;}
+.background .blob:nth-child(3)  { top: 40%; left: 60%; --t: 2s;  --r: 10s;}
+.background .blob:nth-child(4)  { top: 80%; left: 20%; --t: 9s;  --r: 4s;}
+.background .blob:nth-child(5)  { top: 20%; left: 75%; --t: 14s; --r: 6s;}
+.background .blob:nth-child(6)  { top: 55%; left: 30%; --t: 3s;  --r: 11s;}
+.background .blob:nth-child(7)  { top: 15%; left: 55%; --t: 8s;  --r: 1s;}
+.background .blob:nth-child(8)  { top: 65%; left: 45%; --t: 6s;  --r: 13s;}
+.background .blob:nth-child(9)  { top: 30%; left: 85%; --t: 10s; --r: 3s;}
+.background .blob:nth-child(10) { top: 85%; left: 50%; --t: 4s;  --r: 8s;}
+.background .blob:nth-child(11) { top: 25%; left: 35%; --t: 15s; --r: 5s;}
+.background .blob:nth-child(12) { top: 75%; left: 65%; --t: 7s;  --r: 9s;}
+.background .blob:nth-child(13) { top: 45%; left: 10%; --t: 11s; --r: 14s;}
+.background .blob:nth-child(14) { top: 60%; left: 90%; --t: 13s; --r: 6s;}
+.background .blob:nth-child(15) { top: 5%;  left: 50%; --t: 1s;  --r: 12s;}
+
+/* ---------- ANIMACE ---------- */
+
+@keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+}
+
+.background .blob i {
+    animation:
+        spin linear infinite,
+        breathe ease-in-out infinite;
+    animation-duration:
+        calc(6s + var(--r, 0s)),
+        4s;
+}
+
+@keyframes lava-orbit {
+    from {
+        transform:
+            rotate(0deg)
+            translate(var(--rx), var(--ry))
+            rotate(0deg);
+    }
+    to {
+        transform:
+            rotate(360deg)
+            translate(var(--rx), var(--ry))
+            rotate(-360deg);
+    }
+}
+
+@keyframes lava-pulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: blur(18px);
+    }
+    50% {
+        transform: scale(1.12);
+        filter: blur(24px);
+    }
+}

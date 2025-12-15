@@ -1,0 +1,71 @@
+.qr-sprite {
+    display: block;
+    width: 60px;
+    height: 60px;
+
+    background-image: url("/static/qr/spritesheet.png");
+    background-repeat: no-repeat;
+    background-position: var(--x) var(--y);
+}
+
+/* BODY 0..9 (řádek 0)  – aby sedělo na QR_BODY_SPRITES */
+.body-0  {   --x:    0px;    --y:   0px; }
+.body-1  {   --x:   -68px;    --y:  0px; }
+.body-2  {   --x:  -136px;    --y:  0px; }
+.body-3  {   --x:  -204px;    --y:  0px; }
+.body-4  {   --x:  -272px;    --y:  0px; }
+.body-5  {   --x:  -340px;    --y:  0px; }
+.body-6  {   --x:  -408px;    --y:  0px; }
+.body-7  {   --x:  -476px;    --y:  0px; }
+.body-8  {   --x:  -544px;    --y:  0px; }
+.body-9  {   --x:  -612px;    --y:  0px; }
+.body-10 {   --x:    0px;    --y:  -68px; }
+.body-11 {   --x:   -68px;    --y: -68px; }
+.body-12 {   --x:  -136px;    --y: -68px; }
+.body-13 {   --x:  -204px;    --y: -68px; }
+.body-14 {   --x:  -272px;    --y: -68px; }
+.body-15 {   --x:  -340px;    --y: -68px; }
+.body-16 {   --x:  -408px;    --y: -68px; }
+.body-17 {   --x:  -476px;    --y: -68px; }
+.body-18 {   --x:  -544px;    --y: -68px; }
+.body-19 {   --x:  -612px;    --y: -68px; }
+.body-20 {   --x:    0px;    --y: -136px; }
+.body-21 {   --x:   -68px;    --y:-136px; }
+
+/* EYES 0..15 */
+.eye-0  {   --x:    0px;    --y:  -204px; }
+.eye-1  {   --x:   -68px;    --y: -204px; }
+.eye-2  {   --x:  -136px;    --y: -204px; }
+.eye-3  {   --x:  -204px;    --y: -204px; }
+.eye-4  {   --x:  -272px;    --y: -204px; }
+.eye-5  {   --x:  -340px;    --y: -204px; }
+.eye-6  {   --x:  -408px;    --y: -204px; }
+.eye-7  {   --x:  -476px;    --y: -204px; }
+.eye-8  {   --x:  -544px;    --y: -204px; }
+.eye-9  {   --x:  -612px;    --y: -204px; }
+.eye-10 {   --x:    0px;    --y:  -272px; }
+.eye-11 {   --x:   -68px;    --y: -272px; }
+.eye-12 {   --x:  -136px;    --y: -272px; }
+.eye-13 {   --x:  -204px;    --y: -272px; }
+.eye-14 {   --x:  -272px;    --y: -272px; }
+.eye-15 {   --x:  -340px;    --y: -272px; } /* frame16 (index 15) */
+
+/* EYEBALLS 0..17 */
+.eyeball-0  {   --x:    0px;    --y:  -340px; }
+.eyeball-1  {   --x:   -68px;    --y: -340px; }
+.eyeball-2  {   --x:  -136px;    --y: -340px; }
+.eyeball-3  {   --x:  -204px;    --y: -340px; }
+.eyeball-4  {   --x:  -272px;    --y: -340px; }
+.eyeball-5  {   --x:  -340px;    --y: -340px; }
+.eyeball-6  {   --x:  -408px;    --y: -340px; }
+.eyeball-7  {   --x:  -476px;    --y: -340px; }
+.eyeball-8  {   --x:  -544px;    --y: -340px; }
+.eyeball-9  {   --x:  -612px;    --y: -340px; }
+.eyeball-10 {   --x:    0px;    --y:  -408px; }
+.eyeball-11 {   --x:   -68px;    --y: -408px; }
+.eyeball-12 {   --x:  -136px;    --y: -408px; }
+.eyeball-13 {   --x:  -204px;    --y: -408px; }
+.eyeball-14 {   --x:  -272px;    --y: -408px; }
+.eyeball-15 {   --x:  -340px;    --y: -408px; }
+.eyeball-16 {   --x:  -408px;    --y: -408px; }
+.eyeball-17 {   --x:  -476px;    --y: -408px; }

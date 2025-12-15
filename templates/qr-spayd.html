@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8">
+    <title>SPAYD QR generátor</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='qr/qr-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='qr/qr-sprites.css') }}">
+    <script defer src="{{ url_for('static', filename='qr/qr-ui.js') }}"></script>
+</head>
+<body>
+    <div class="background">
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+        <span class="blob"><i></i></span>
+    </div>
+    <form method="post">
+        <div class="container">
+            <div class="panel">
+                <h1 class="page-title">SPAYD QR generátor</h1>
+                <h2>Platební údaje</h2>
+                <div class="form-grid-4">
+                    <div>
+                        <label>Země ban. účtu</label>
+                        <select name="country">
+                            {% for c in countries %}
+                                <option value="{{ c }}" {{ 'selected' if form_data.get('country','CZ') == c else '' }}>{{ c }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Kód banky</label>
+                        <input name="bankcode" value="{{ form_data.get('bankcode','6210') }}">
+                    </div>
+                    <div>
+                        <label>Předčíslí (jen v CZ)</label>
+                        <input name="prefix" value="{{ form_data.get('prefix','670100') }}">
+                    </div>
+                    <div>
+                        <label>Číslo účtu</label>
+                        <input name="number" value="{{ form_data.get('number','2200921129') }}">
+                    </div>
+                </div>
+                <div class="form-grid-inline">
+                    <div class="w-amount">
+                        <label>Částka</label>
+                        <input name="amount" value="{{ form_data.get('amount','1') }}">
+                    </div>
+                    <div class="w-currency">
+                        <label>Měna</label>
+                        <input name="currency" value="{{ form_data.get('currency','CZK') }}">
+                    </div>
+                    <div class="w-vs">
+                        <label>Variabilní symbol</label>
+                        <input name="varsym" value="{{ form_data.get('varsym','2025007') }}">
+                    </div>
+                    <div class="w-recipient">
+                        <label>Příjemce platby</label>
+                        <input name="recipient" value="{{ form_data.get('recipient','Jan Nováček') }}">
+                    </div>
+                    <div class="w-message">
+                        <label>Zpráva pro příjemce</label>
+                        <input name="messageforrecipient" value="{{ form_data.get('messageforrecipient','Platba') }}">
+                    </div>
+                </div>
+                <div class="section">
+                    <h2 class="accordion-header" id="qrConfigToggle"><span class="accordion-title">QR konfigurace<span class="accordion-arrow"></span></span></h2>
+
+
+                    <div class="accordion-content" id="qrConfigContent">
+                    <label>Tvar těla QR</label>
+                    <div class="radio-grid">
+                    {% for name, idx in QR_BODY_SPRITES.items() %}
+                        <label class="radio-tile">
+                            <input type="radio" name="qr_body" value="{{ name }}" {{ 'checked' if form_data.get('qr_body','mosaic') == name else '' }}>
+                            <span class="tile">
+                                <span class="qr-sprite body body-{{ idx }}"></span>
+                            </span>
+                        </label>
+                    {% endfor %}
+                </div>
+
+                <label>Rámeček očí QR</label>
+                <div class="radio-grid">
+                {% for v in qr_eyes %}
+                    <label class="radio-tile">
+                        <input type="radio" name="qr_eye" value="{{ v }}" {{ 'checked' if form_data.get('qr_eye','frame16') == v else '' }}>
+                        <span class="tile">
+                            <span class="qr-sprite eye eye-{{ loop.index0 }}"></span>
+                        </span>
+                    </label>
+                {% endfor %}
+                </div>
+
+                <label>Výplň očí QR</label>
+                <div class="radio-grid">
+                {% for v in qr_eyeballs %}
+                    <label class="radio-tile">
+                        <input type="radio" name="qr_eyeball" value="{{ v }}" {{ 'checked' if form_data.get('qr_eyeball','ball19') == v else '' }}>
+                        <span class="tile">
+                            <span class="qr-sprite eyeball eyeball-{{ loop.index0 }}"></span>
+                        </span>
+                    </label>
+                {% endfor %}
+                </div>
+
+                <div class="color-grid">
+                    <div>
+                        <label>Barva QR</label>
+                        <input type="color" name="bodyColor" value="{{ form_data.get('bodyColor','#000000') }}">
+                    </div>
+                    <div>
+                        <label>Pozadí</label>
+                        <input type="color" name="bgColor" value="{{ form_data.get('bgColor','#ffffff') }}">
+                    </div>
+                    <div>
+                        <label>Barva eye</label>
+                        <input type="color" name="eyeColor" value="{{ form_data.get('eyeColor','#000000') }}">
+                    </div>
+                    <div>
+                        <label>Barva eyeball</label>
+                        <input type="color" name="eyeBallColor" value="{{ form_data.get('eyeBallColor','#000000') }}">
+                    </div>
+                </div>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="useGradient" name="useGradient" value="1" {{ 'checked' if form_data.get('useGradient') == '1' else '' }}>
+                    <span>Použít gradient</span>
+                </label>
+                <div class="section">
+                        <div id="gradient-options">
+                            <div class="gradient-grid gradient-swap">
+                                <div>
+                                    <label>Gradient 1</label>
+                                    <input type="color" id="gradientColor1" name="gradientColor1" value="{{ form_data.get('gradientColor1','#ff0000') }}">
+                                </div>
+
+                                <div class="swap-button-wrapper">
+                                    <button type="button" class="swap-colors" title="Prohodit barvy">⇄</button>
+                                </div>
+
+                                <div>
+                                    <label>Gradient 2</label>
+                                    <input type="color" id="gradientColor2" name="gradientColor2" value="{{ form_data.get('gradientColor2','#bd027c') }}">
+                                </div>
+
+                                <div>
+                                    <label>Typ gradientu</label>
+                                    <select name="gradientType">
+                                        <option value="linear" {{ 'selected' if form_data.get('gradientType','radial') == 'linear' else '' }}>linear</option>
+                                        <option value="radial" {{ 'selected' if form_data.get('gradientType','radial') == 'radial' else '' }}>radial</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="checkbox-inline gradient-eyes">
+                                        <input type="checkbox" name="gradientOnEyes" value="1" {{ 'checked' if form_data.get('gradientOnEyes') == '1' else '' }}>
+                                        <span>Gradient i na oči</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div class="qr-size-row">
+                        <label>Velikost QR (px)</label>
+                        <input type="number" name="qr_size" min="200" max="2000" step="10" value="{{ form_data.get('qr_size',600) }}">
+                        <button type="submit" class="submitbutton">Vygenerovat QR</button>
+                    </div>                
+                </div>
+            </div>
+
+                
+            </div>
+
+            <div class="panel qr-preview">
+            <h2>Výsledek</h2>
+
+            {% if qr_file %}
+                <img src="{{ url_for('static', filename='qr/spayd_qr.png') }}?v={{ spayd_string|length }}">
+                <pre>Short Payment Descriptor:<br />{{ spayd_string }}</pre>
+            {% else %}
+                <p>Vyplň formulář a vygeneruj QR kód.</p>
+            {% endif %}
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>
