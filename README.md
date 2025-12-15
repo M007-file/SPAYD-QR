@@ -30,7 +30,7 @@ The implementation is intended primarily for **development, experimentation, and
 ---
 
 ## Project Structure
-
+---
 .
 ├── app.py # Flask web application
 ├── spayd.py # Core SPAYD, IBAN, and QR logic
@@ -44,7 +44,7 @@ The implementation is intended primarily for **development, experimentation, and
 │ ├── spritesheet.png # QR shape sprites
 │ └── petikoruna.jpg # Example logo
 └── README.md
-
+---
 
 Temporary files and cache directories are intentionally excluded from version control.
 
