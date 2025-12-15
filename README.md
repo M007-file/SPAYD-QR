@@ -1,96 +1,60 @@
-# SPAYD-QR
-FLASK - Python application to generate a customizable payment QR code
+# SPAYD QR Generator (Flask)
 
-# SPAYD QR Generator
+This repository contains a web-based SPAYD QR code generator implemented in Python using Flask. The application generates valid SPAYD payment descriptors (SPD*1.0), computes IBANs according to official specifications, and produces customizable QR codes using the QRCodeMonkey API.
 
-A web-based SPAYD (Short Payment Descriptor) QR code generator built with Python and Flask.
+The project is intended as a technical demonstration and experimental tool for working with SPAYD payments, IBAN validation, and QR code customization. It is not intended for production or commercial use.
 
-The project generates **valid SPAYD payment strings** in accordance with the official specification and renders customizable QR codes via the QRCodeMonkey API.  
-It supports advanced visual configuration (QR body, eyes, colors, gradients) and optional logo embedding.
+The application supports multiple countries (CZ, SK, DE, AT, PL), allows detailed customization of QR code appearance (body shape, eye style, colors, gradients), and optionally embeds a logo into the generated QR code. The web interface is implemented using Flask templates, CSS, and JavaScript, without any database or persistent storage.
 
-The implementation is intended primarily for **development, experimentation, and self-hosted use**.
+This repository is provided **AS IS**, without any warranty of any kind, express or implied. The author assumes **no responsibility or liability** for errors, incorrect outputs, financial losses, or any damage resulting from the use or misuse of this software.
 
 ---
 
-## Features
+## Project structure
 
-- Valid SPAYD string generation
-- IBAN generation with checksum validation
-- Support for multiple countries (CZ, SK, DE, AT, PL)
-- SPAYD-compliant text sanitization
-- Customizable QR design:
-  - QR body shapes
-  - Eye and eyeball styles
-  - Solid colors or gradients
-- Optional gradient application to QR eyes
-- Logo embedding into the QR code
-- Web UI built with Flask and vanilla HTML/CSS/JS
-- No external frontend frameworks
-
----
-
-## Project Structure
----
+```text
 .
-├── app.py # Flask web application
-├── spayd.py # Core SPAYD, IBAN, and QR logic
+├── app.py                  # Flask web application
+├── spayd.py                # Core SPAYD, IBAN, and QR logic
 ├── templates/
-│ └── qr-spayd.html # Main HTML template
+│   └── qr-spayd.html       # Main HTML template
 ├── static/
-│ └── qr/
-│ ├── qr-ui.css # UI styles
-│ ├── qr-ui.js # UI and background logic
-│ ├── qr-sprites.css # QR sprite definitions
-│ ├── spritesheet.png # QR shape sprites
-│ └── petikoruna.jpg # Example logo
+│   └── qr/
+│       ├── qr-ui.css       # UI styles
+│       ├── qr-ui.js        # UI and background logic
+│       ├── qr-sprites.css  # QR sprite definitions
+│       ├── spritesheet.png # QR shape sprites
+│       └── petikoruna.jpg  # Example logo
 └── README.md
+```
+
 ---
 
-Temporary files and cache directories are intentionally excluded from version control.
+## Usage
 
-## Requirements
+The application requires Python 3.9 or newer.
 
-- Python 3.9+
-- pip packages:
-  - Flask
-  - requests
-  - Pillow
+Required Python packages:
+- Flask
+- Requests
+- Pillow
 
-Install dependencies:
-pip install flask requests pillow
+Install dependencies using pip and start the application by running:
 
-Running the Application
+```bash
 python app.py
+```
 
-The development server will start on:
-http://localhost:5000
+After starting the server, open a web browser and navigate to:
 
-The app runs in debug mode by default and reloads automatically on code changes.
+```
+http://127.0.0.1:5000/
+```
 
-SPAYD Specification
-The SPAYD format follows the official specification:
-https://qr-platba.cz/pro-vyvojare/
+QR codes are generated using the public QRCodeMonkey API. Generated image files are stored temporarily in the `static/qr/` directory.
 
-All user-provided text fields are sanitized to comply with the allowed SPAYD character set (uppercase ASCII, no diacritics).
+---
 
-QR Code Generation
-QR codes are generated via the QRCodeMonkey API:
-https://www.qrcode-monkey.com/qr-code-api-with-logo/
+## License
 
-This project does not implement its own QR rendering engine.
-
-Notes and Limitations
-This project depends on a third-party API for QR rendering.
-
-No authentication, rate limiting, or persistence is implemented.
-Intended for local use, demos, or internal tools.
-
-Not designed as a payment gateway or production payment processor.
-
-## Disclaimer
-
-This repository is provided **"AS IS"**, without any express or implied warranty.  
-The authors make no guarantees regarding correctness, reliability, or fitness for any particular purpose.
-
-Use of this software is entirely at your own risk.  
-The authors assume no responsibility or liability for errors, omissions, data loss, financial loss, or any other damages resulting from the use or misuse of this project.
+See the `LICENSE.md` file for license information.
