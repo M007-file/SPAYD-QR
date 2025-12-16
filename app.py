@@ -1,8 +1,16 @@
 from flask import Flask, request, render_template, send_file
+from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 import spayd
 
 app = Flask(__name__)
+
+app.wsgi_app = ProxyFix(
+    app.wsgi_app,
+    x_for=1,
+    x_proto=1,
+    x_host=1
+)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -13,7 +21,13 @@ def index():
     os.makedirs(QR_DIR, exist_ok=True)
 
     if request.method == "POST":
-        form_data = request.form.to_dict()
+        #form_data = request.form.to_dict()
+        if not accountcountry:
+            return render_template(
+                "index.html",
+                error="Nebyla vybrána země účtu"
+            )
+
         # ---- defaulty pro FORMULÁŘ (ne pro QR!) ----
         form_data.setdefault("gradientColor1", "#ff0000")
         form_data.setdefault("gradientColor2", "#bd027c")
