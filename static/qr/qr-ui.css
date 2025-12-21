@@ -34,14 +34,6 @@ body {
     width: 100%;
 }
 
-.background {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    background: radial-gradient(circle at top, #3E1E68, #1b0f2f);
-}
-
 .container,
 .panel {
     position: relative;
@@ -51,12 +43,13 @@ body {
 /* =========================================================
    FORM PRVKY
    ========================================================= */
-label.checkbox-inline {
-    display: inline-flex !important;
+.checkbox-inline {
+    display: inline-flex;
     align-items: center;
     gap: 8px;
-    white-space: nowrap;
     margin-top: 12px;
+    font-weight: 600;
+    white-space: nowrap;
 }
 
 label {
@@ -78,6 +71,10 @@ select {
 input[type="color"] {
     height: 32px;
     padding: 2px;
+}
+
+select {
+    accent-color: #2b1450;
 }
 
 /* =========================================================
@@ -143,12 +140,8 @@ input[type="color"] {
 /* =========================================================
    CHECKBOXY
    ========================================================= */
-.checkbox-inline {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 12px;
-    font-weight: 600;
+.checkbox-inline input[type="checkbox"] {
+    accent-color: #2b1450;
 }
 
 /* =========================================================
@@ -185,17 +178,104 @@ input[type="color"] {
 
 .radio-tile input:checked + .tile {
     background-color: #f5faff;
-    border-color: #1976d2;
+    border-color: #554373;
     border-width: 2px;
     box-shadow:
         0 0 0 2px #ffffff,
-        0 0 0 4px #1976d2;
+        0 0 0 4px #554373
 }
+
+fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-inline-size: 0; /* důležité pro grid/flex layout */
+}
+
+.qr-radio-group {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    margin-top: 20px;
+    min-inline-size: 0;
+}
+
+.qr-radio-group legend.section-label {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.qr-colors-section {
+    margin-top: 20px; /* stejné jako .qr-radio-group */
+}
+
+.qr-final-section {
+    margin-top: 20px;
+}
+
+fieldset legend {
+    display: block;
+    padding: 0;
+    margin: 0 0 6px 0;   /* jen malá mezera pod */
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1.2;   /* KLÍČOVÉ */
+}
+
+/* =========================================================
+   PRIMARY CTA – Generate QR
+   ========================================================= */
 
 .submitbutton {
     width: 150px;
-    padding:5px;
+    padding: 8px 14px;
     margin-top: 3px;
+
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .2px;
+
+    color: #ffffff;
+    background: linear-gradient(135deg, #3E1E68, #2b1450);
+    border: 1px solid #2b1450;
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 6px rgba(43, 20, 80, 0.25),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+
+    transition:
+        background 0.15s ease,
+        transform 0.12s ease,
+        box-shadow 0.15s ease;
+}
+
+/* Hover – jemné „zvednutí“ */
+.submitbutton:hover {
+    background: linear-gradient(135deg, #4a257a, #341a5c);
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 4px 12px rgba(43, 20, 80, 0.35),
+        inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+/* Active – pocit stisku */
+.submitbutton:active {
+    transform: translateY(0);
+    box-shadow:
+        0 2px 5px rgba(43, 20, 80, 0.28),
+        inset 0 2px 4px rgba(0,0,0,0.25);
+}
+
+/* Focus – klávesnice */
+.submitbutton:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 3px rgba(123, 63, 228, 0.45),
+        0 2px 6px rgba(43, 20, 80, 0.3);
 }
 
 .accordion-header {
@@ -232,11 +312,37 @@ input[type="color"] {
     display: block;
 }
 
-.gradient-grid.gradient-swap { grid-template-columns: 1fr 44px 1fr 160px auto; }
-.swap-button-wrapper { display: flex; align-items: end; justify-content: center; padding-bottom: 2px; }
-.swap-colors { width: 36px; height: 36px; border-radius: 10px; padding: 0px; border: 1px solid #cfcfcf; background: #fff; cursor: pointer; font-weight: 700; }
-.swap-colors:hover { box-shadow: 0 2px 10px rgba(0,0,0,.12); }
+.gradient-grid.gradient-swap { 
+    grid-template-columns: 120px 40px 120px 160px auto; 
+}
 
+.swap-button-wrapper { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.swap-colors { 
+    width: 32px; 
+    height: 32px; 
+    border-radius: 8px; 
+    padding: 0px; 
+    border: 1px solid #cfcfcf; 
+    background-color:#2b1450;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer; 
+    font-weight: 700; 
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+    color: #fff; 
+}
+
+.swap-colors:hover { 
+    box-shadow: 0 2px 10px rgba(0,0,0,.12); 
+}
 
 /* =========================================================
    QR SPRITE
@@ -256,12 +362,23 @@ input[type="color"] {
    ========================================================= */
 .color-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(110px, 1fr)) auto;
     gap: 12px;
 }
 
 .color-grid input[type="color"] {
     width: 100%;
+    height: 32px;
+    padding: 2px;
+    max-width: 120px;
+}
+
+.color-grid-toggle {
+    display: flex;
+    align-items: center;
+    padding-bottom: 0;
+    margin-bottom: auto;
+    margin-top: 19px;
 }
 
 /* =========================================================
@@ -270,6 +387,13 @@ input[type="color"] {
 #gradient-options {
     display: none;
     margin-top: 5px;
+}
+
+.gradient-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 32px;
 }
 
 /* =========================================================
@@ -324,6 +448,36 @@ button {
 .gradient-grid input[type="color"],
 .gradient-grid select {
     width: 100%;
+    height: 32px;
+}
+
+/* Share icons link */
+a.share-icon {
+    display: inline-flex;
+    border-radius: 4px;
+    line-height: 0;
+    text-decoration: none;          /* ← DŮLEŽITÉ */
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Ikona samotná */
+a.share-icon img {
+    border-radius: 4px;
+    background-color: #2b1450;
+    transition: filter 0.15s ease;
+}
+
+/* Hover myší + focus z klávesnice */
+a.share-icon:hover,
+a.share-icon:focus-visible {
+    text-decoration: none;          /* ← pojistka */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(43, 20, 80, 0.35);
+}
+
+a.share-icon:hover img,
+a.share-icon:focus-visible img {
+    filter: brightness(1.15);
 }
 
 /* =========================================================

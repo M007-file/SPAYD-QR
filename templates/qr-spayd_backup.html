@@ -37,8 +37,9 @@
 </head>
 <body>
     <div class="background">
-    {% for i in range(50) %}    <span class="blob"><i></i></span>
-    {% endfor %}</div>
+        {% for i in range(50) %}<span class="blob"><i></i></span>
+        {% endfor %}
+    </div>
     <form method="post">
         <div class="container">
             <div class="panel">
@@ -93,46 +94,40 @@
                 <div class="section">
                     <h2 class="accordion-header" id="qrConfigToggle"><span class="accordion-title" aria-label="Design the layout of the QR code">QR configuration<span class="accordion-arrow"></span></span></h2>
                     <div class="accordion-content" id="qrConfigContent">
-                        <div class="section">
-                            <fieldset class="qr-radio-group">
-                                <legend class="section-label">QR body</legend>
-                                <div class="radio-grid" role="radiogroup">{% for name, idx in QR_BODY_SPRITES.items() %}
-                                    <label class="radio-tile">
-                                        <input type="radio" name="qr_body" value="{{ name }}" aria-label="QR body style {{ name }}"{% if form_data.get('qr_body','mosaic') == name %} checked{% endif %}>
-                                        <span class="tile" title="QR body style {{ name }}">
-                                            <span class="qr-sprite body body-{{ idx }}"></span>
-                                        </span>
-                                    </label>{% endfor %}
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="section">
-                            <fieldset class="qr-radio-group">
-                                <legend class="section-label">QR eyes</legend>
-                                <div class="radio-grid" role="radiogroup">{% for v in qr_eyes %}
-                                    <label class="radio-tile">
-                                        <input type="radio" name="qr_eye" value="{{ v }}" aria-label="QR eye style {{ v }}"{% if form_data.get('qr_eye','frame16') == v %} checked{% endif %}>
-                                        <span class="tile" title="QR eye style {{ v }}">
-                                            <span class="qr-sprite eye eye-{{ loop.index0 }}"></span>
-                                        </span>
-                                    </label>{% endfor %}
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="section">
-                            <fieldset class="qr-radio-group">
-                                <legend class="section-label">QR eyeballs</legend>
-                                <div class="radio-grid" role="radiogroup">{% for v in qr_eyeballs %}
-                                    <label class="radio-tile">
-                                        <input type="radio" name="qr_eyeball" value="{{ v }}" aria-label="QR eyeball style {{ v }}"{% if form_data.get('qr_eyeball','ball19') == v %} checked{% endif %}>
-                                        <span class="tile" title="QR eyeball style {{ v }}">
-                                            <span class="qr-sprite eyeball eyeball-{{ loop.index0 }}"></span>
-                                        </span>
-                                    </label>{% endfor %}
-                                </div>
-                            </fieldset>
-                        </div>
-                    <div class="qr-colors-section section">
+                        <fieldset class="qr-radio-group">
+                            <legend class="section-label">QR body</legend>
+                            <div class="radio-grid">{% for name, idx in QR_BODY_SPRITES.items() %}
+                                <label class="radio-tile">
+                                    <input type="radio" name="qr_body" value="{{ name }}"{% if form_data.get('qr_body','mosaic') == name %} checked{% endif %}>
+                                    <span class="tile">
+                                        <span class="qr-sprite body body-{{ idx }}"></span>
+                                    </span>
+                                </label>{% endfor %}
+                            </div>
+                        </fieldset>
+                        <fieldset class="qr-radio-group">
+                            <legend class="section-label">QR eyes</legend>
+                            <div class="radio-grid">{% for v in qr_eyes %}
+                                <label class="radio-tile">
+                                    <input type="radio" name="qr_eye" value="{{ v }}"{% if form_data.get('qr_eye','frame16') == name %} checked{% endif %}>
+                                    <span class="tile">
+                                        <span class="qr-sprite eye eye-{{ loop.index0 }}"></span>
+                                    </span>
+                                </label>{% endfor %}
+                            </div>
+                        </fieldset>
+                        <fieldset class="qr-radio-group">
+                            <legend class="section-label">QR eyeballs</legend>
+                            <div class="radio-grid">{% for v in qr_eyeballs %}
+                                <label class="radio-tile">
+                                    <input type="radio" name="qr_eyeball" value="{{ v }}"{% if form_data.get('qr_eyeball','ball19') == name %} checked{% endif %}>
+                                    <span class="tile">
+                                        <span class="qr-sprite eyeball eyeball-{{ loop.index0 }}"></span>
+                                    </span>
+                                </label>{% endfor %}
+                            </div>
+                        </fieldset>
+                    <div class="qr-colors-section">
                         <div class="color-grid">
                             <div>
                                 <label>QR body color</label>
@@ -150,28 +145,29 @@
                                 <label>QR eyeball color</label>
                                 <input type="color" name="eyeBallColor" value="{{ form_data.get('eyeBallColor','#000000') }}" aria-label="QR code eyeball color">
                             </div>
-                            <div class="color-grid-toggle">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" id="useGradient" name="useGradient" value="1" {{ 'checked' if form_data.get('useGradient') == '1' else '' }} aria-label="Do you want to use the gradient in the QR code?">
-                                    <span>Use color gradient</span>
-                                </label>            
-                            </div>
                         </div>
                     </div>
-                    <div>
-                        <div id="gradient-options" class="color-grid section">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="useGradient" name="useGradient" value="1" {{ 'checked' if form_data.get('useGradient') == '1' else '' }} aria-label="Do you want to use the gradient in the QR code?">
+                        <span>Use color gradient</span>
+                    </label>
+                    <div class="section">
+                        <div id="gradient-options">
                             <div class="gradient-grid gradient-swap">
                                 <div>
                                     <label>Gradient 1</label>
                                     <input type="color" id="gradientColor1" name="gradientColor1" value="{{ form_data.get('gradientColor1','#ff0000') }}" aria-label="Gradient color #1">
                                 </div>
+
                                 <div class="swap-button-wrapper">
                                     <button type="button" class="swap-colors" title="Swap colors" aria-label="Swap selected colors">⇄</button>
                                 </div>
+
                                 <div>
                                     <label>Gradient 2</label>
                                     <input type="color" id="gradientColor2" name="gradientColor2" value="{{ form_data.get('gradientColor2','#bd027c') }}" aria-label="Gradient color #2">
                                 </div>
+
                                 <div>
                                     <label>Gradient type</label>
                                     <select name="gradientType" aria-label="Choose if the gradient will be linear or radial">
@@ -179,33 +175,36 @@
                                         <option value="radial" {{ 'selected' if form_data.get('gradientType','radial') == 'radial' else '' }}>radial</option>
                                     </select>
                                 </div>
+
                                 <div>
-                                    <div class="color-grid-toggle">
-                                        <label class="checkbox-inline gradient-checkbox gradient-eyes">
-                                            <input type="checkbox" name="gradientOnEyes" value="1" {{ 'checked' if form_data.get('gradientOnEyes') == '1' else '' }} aria-label="Check if you want to use gradient also on eyes and eyeballs">
-                                            <span>Gradient on eyes</span>
-                                        </label>
-                                    </div>
+                                    <label class="checkbox-inline gradient-eyes">
+                                        <input type="checkbox" name="gradientOnEyes" value="1" {{ 'checked' if form_data.get('gradientOnEyes') == '1' else '' }} aria-label="Check if you want to use gradient also on eyes and eyeballs">
+                                        <span>Gradient on eyes</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="form-actions section">
+                <div class="form-actions">
                     <div class="qr-final-section">
                         <div class="qr-size-row">
                             <label>QR size (px)</label>
                             <input type="number" name="qr_size" min="200" max="2000" step="10" value="{{ form_data.get('qr_size',600) }}" aria-label="Enter the dimension of the QR code size">
                             <button type="submit" class="submitbutton">Generate the QR</button>
                             <label>Hosted on a <a href="https://www.jdoqocy.com/m077lnwtnvACBCECIDBIACDFGFHED" target="_blank">self-managed VPS</a>.</label>
-                            <div id="social-networks" class="social-networks" style="margin-top:3px;">
+                            <div>
                                 <a href="https://www.addtoany.com/share#url=https%3A%2F%2Fuas.lol%2F&amp;title=Valid%20SPAYD%20QR%20Generator" class="share-icon" target="_blank" rel="noopener noreferrer nofollow" aria-label="Share SPAYD QR Generator">
                                     <img src="https://static.addtoany.com/buttons/a2a.svg" loading="lazy" width="32" height="32" alt="Share this SPAYD QR generator" title="Share this SPAYD QR generator" style="background-color:#2b1450">
                                 </a>
-                                <a href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fuas.lol%2F&amp;linkname=Valid%20SPAYD%20QR%20Generator" class="share-icon" target="_blank" rel="noopener noreferrer nofollow" aria-label="Share SPAYD QR Generator on Facebook">
+                                <a href="https://www.addtoany.com/add_to/facebook?linkurl=https%3A%2F%2Fuas.lol%2F&amp;linkname=Valid%20SPAYD%20QR%20Generator"
+                                class="share-icon" target="_blank" rel="noopener noreferrer nofollow" aria-label="Share SPAYD QR Generator on Facebook">
                                     <img src="https://static.addtoany.com/buttons/facebook.svg" loading="lazy" width="32" height="32" alt="Share on Facebook" title="Share with your friends on Facebook" style="background-color:#2b1450">
                                 </a>
-                                <a href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fuas.lol%2F&amp;linkname=Valid%20SPAYD%20QR%20Generator" class="share-icon" target="_blank" rel="noopener noreferrer nofollow" aria-label="Share SPAYD QR Generator on LinkedIn">
+                                <a href="https://www.addtoany.com/add_to/linkedin?linkurl=https%3A%2F%2Fuas.lol%2F&amp;linkname=Valid%20SPAYD%20QR%20Generator"
+                                class="share-icon" target="_blank"
+                                rel="noopener noreferrer nofollow"
+                                aria-label="Share SPAYD QR Generator on LinkedIn">
                                     <img src="https://static.addtoany.com/buttons/linkedin.svg" loading="lazy" width="32" height="32" alt="Share on LinkedIn" title="Share this tool on LinkedIn" style="background-color:#2b1450">
                                 </a>
                                 <a href="https://www.addtoany.com/add_to/whatsapp?linkurl=https%3A%2F%2Fuas.lol%2F&amp;linkname=Valid%20SPAYD%20QR%20Generator" class="share-icon" target="_blank" rel="noopener noreferrer nofollow" aria-label="Share SPAYD QR Generator on WhatsApp">
@@ -218,12 +217,21 @@
                         </div>
                     </div>              
                 </div>
-            </div>                
             </div>
-            <div class="panel qr-preview">{% if qr_file %}            
+
+                
+            </div>
+
+            <div class="panel qr-preview">
+            
+
+            {% if qr_file %}
                 <h2>Your QR code</h2>
                 <img src="{{ url_for('static', filename='qr/spayd_qr.png') }}?v={{ spayd_string|length }}">
-                <pre>Short Payment Descriptor:<br />{{ spayd_string }}</pre>{% else %}<p>Fill-in the form and generate the QR code.</p>{% endif %}
+                <pre>Short Payment Descriptor:<br />{{ spayd_string }}</pre>
+            {% else %}
+                <p>Fill-in the form and generate the QR code.</p>
+            {% endif %}
             </div>
         </div>
     </form>

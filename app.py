@@ -1,16 +1,48 @@
 from flask import Flask, request, render_template, send_file
-from werkzeug.middleware.proxy_fix import ProxyFix
 import os
 import spayd
 
 app = Flask(__name__)
 
-app.wsgi_app = ProxyFix(
-    app.wsgi_app,
-    x_for=1,
-    x_proto=1,
-    x_host=1
-)
+BANK_ACCOUNT_FIELDS = {
+    "bankcode",
+    "prefix",
+    "number",
+}
+
+def reset_bank_fields(form_data: dict) -> dict:
+    """
+    Vymaže bankovní pole při změně země účtu.
+    Nezasahuje do defaultů pro GET.
+    """
+    cleaned = dict(form_data)
+    for field in BANK_ACCOUNT_FIELDS:
+        cleaned[field] = ""
+    return cleaned
+
+def has_complete_bank_account(country: str, form_data: dict) -> bool:
+    """
+    Ověří, že jsou vyplněna povinná bankovní pole
+    podle skutečných polí ve formuláři.
+    """
+
+    # SPAYD podporujeme jen pro IBAN země
+    if country not in spayd.IBAN_SCHEMAS:
+        return False
+
+    # Povinné pro VŠECHNY IBAN země
+    if not form_data.get("bankcode"):
+        return False
+
+    if not form_data.get("number"):
+        return False
+
+    # CZ má prefix (po načtení má default, ale hlídáme existenci)
+    if country == "CZ" and form_data.get("prefix") is None:
+        return False
+
+    return True
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -21,12 +53,36 @@ def index():
     os.makedirs(QR_DIR, exist_ok=True)
 
     if request.method == "POST":
-        #form_data = request.form.to_dict()
+        form_data = request.form.to_dict()
+
+        original_country = form_data.get("original_country")
+        current_country = form_data.get("country")
+
+        # Změna země účtu ⇒ výmaz bankovních polí
+        if original_country and current_country and original_country != current_country:
+            form_data = reset_bank_fields(form_data)
+
+        form_data.setdefault("gradientColor1", "#ff0000")
+        form_data.setdefault("gradientColor2", "#bd027c")
+        form_data.setdefault("gradientType", "radial")
+        form_data.setdefault("gradientOnEyes", "0")
+        form_data.setdefault("useGradient", "0")
+
+        accountcountry   = form_data.get("country")
+        accountbankcode  = form_data.get("bankcode")
+        accountprefix    = form_data.get("prefix", "0")
+        accountnumber    = form_data.get("number")
+        amount           = form_data.get("amount")
+        currency         = form_data.get("currency")
+        varsymbol        = form_data.get("varsym")
+        message          = form_data.get("messageforrecipient")
+        recipientname    = form_data.get("recipient")
+
         if not accountcountry:
-            return render_template(
-                "index.html",
-                error="Nebyla vybrána země účtu"
-            )
+            return render_template("qr-spayd.html", qr_file=None, spayd_string=None, countries=spayd.IBAN_SCHEMAS.keys(), form_data=form_data, QR_BODY_SPRITES=spayd.QR_BODY_SPRITES, qr_eyes=spayd.QR_EYES, qr_eyeballs=spayd.QR_EYEBALLS, gradient_types=spayd.GRADIENT_TYPES, error="Nebyla vybrána země účtu")
+
+        if not amount:
+            return render_template("qr-spayd.html", qr_file=None, spayd_string=None, countries=spayd.IBAN_SCHEMAS.keys(), form_data=form_data, QR_BODY_SPRITES=spayd.QR_BODY_SPRITES, qr_eyes=spayd.QR_EYES, qr_eyeballs=spayd.QR_EYEBALLS, gradient_types=spayd.GRADIENT_TYPES, error="Nebyla zadána částka")
 
         # ---- defaulty pro FORMULÁŘ (ne pro QR!) ----
         form_data.setdefault("gradientColor1", "#ff0000")
@@ -45,6 +101,21 @@ def index():
         varsymbol        = form_data.get("varsym")
         message          = form_data.get("messageforrecipient")
         recipientname    = form_data.get("recipient")
+
+        # ===== VALIDACE BANKOVNÍCH ÚDAJŮ =====
+        if not has_complete_bank_account(accountcountry, form_data):
+            return render_template(
+                "qr-spayd.html",
+                qr_file=None,
+                spayd_string=None,
+                countries=spayd.IBAN_SCHEMAS.keys(),
+                form_data=form_data,
+                QR_BODY_SPRITES=spayd.QR_BODY_SPRITES,
+                qr_eyes=spayd.QR_EYES,
+                qr_eyeballs=spayd.QR_EYEBALLS,
+                gradient_types=spayd.GRADIENT_TYPES,
+                error="Po změně země je nutné znovu vyplnit bankovní účet."
+            )
 
         # ===== IBAN =====
         iban = spayd.generate_iban(
@@ -133,8 +204,8 @@ def index():
             "amount": "1",
             "currency": "CZK",
             "varsym": "2025007",
-            "recipient": "Jan Nováček",
-            "messageforrecipient": "Platba",
+            "recipient": "John Doe",
+            "messageforrecipient": "Reimbursement for our lunch",
             "qr_body": "square",
             "qr_eye": "frame0",
             "qr_eyeball": "ball0",
