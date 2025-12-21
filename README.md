@@ -37,9 +37,12 @@ QR code generation is powered by the public API provided by https://www.qrcode-m
 │   └── qr-spayd.html       # Main HTML template
 ├── static/
 │   └── qr/
+│       ├── favicon.gif     # webpage icon
+│       ├── og-preview.png  # default image for social network sharing
 │       ├── qr-ui.css       # UI styles
 │       ├── qr-ui.js        # UI and background logic
 │       ├── qr-sprites.css  # QR sprite definitions
+│       ├── spayd_qr.png    # resulting QR code
 │       ├── spritesheet.png # QR shape sprites
 │       └── petikoruna.jpg  # Example logo
 └── README.md
